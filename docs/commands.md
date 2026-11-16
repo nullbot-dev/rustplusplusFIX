@@ -256,7 +256,7 @@ Subcommand | Options | Description | Required
 
 Subcommand | Options | Description | Required
 ---------- | ------- | ----------- | --------
-`discord` | &nbsp; | Reset discord channels. | &nbsp;
+`discord` | &nbsp; | Reset discord channels. Channels that already exist in the `rustplusplus` category are reused and renamed to the emoji names, missing ones are created and an old events channel is removed. | &nbsp;
 `information` | &nbsp; | Reset information channel. | &nbsp;
 `servers` | &nbsp; | Reset servers channel. | &nbsp;
 `settings` | &nbsp; | Reset settings channel. | &nbsp;

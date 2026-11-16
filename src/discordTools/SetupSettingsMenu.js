@@ -42,7 +42,6 @@ module.exports = async (client, guild, forced = false) => {
         await DiscordTools.clearTextChannel(guild.id, instance.channelId.settings, 100);
 
         await setupGeneralSettings(client, guild.id, channel);
-        await setupNotificationSettings(client, guild.id, channel);
 
         instance.firstTime = false;
         client.setInstance(guild.id, instance);
@@ -268,36 +267,6 @@ async function setupGeneralSettings(client, guildId, channel) {
             components: DiscordButtons.getSubscribeToChangesBattlemetricsButtons(guildId),
             files: [new Discord.AttachmentBuilder(
                 Path.join(__dirname, '..', 'resources/images/settings_logo.png'))]
-        });
-    }
-}
-
-async function setupNotificationSettings(client, guildId, channel) {
-    const instance = client.getInstance(guildId);
-
-    await client.messageSend(channel, {
-        files: [new Discord.AttachmentBuilder(
-            Path.join(__dirname, '..',
-                `resources/images/settings/notification_settings_logo_${instance.generalSettings.language}.png`))]
-    });
-
-    for (const setting in instance.notificationSettings) {
-        await client.messageSend(channel, {
-            embeds: [DiscordEmbeds.getEmbed({
-                color: Constants.COLOR_SETTINGS,
-                title: client.intlGet(guildId, setting),
-                thumbnail: `attachment://${instance.notificationSettings[setting].image}`
-            })],
-            components: [
-                DiscordButtons.getNotificationButtons(
-                    guildId, setting,
-                    instance.notificationSettings[setting].discord,
-                    instance.notificationSettings[setting].inGame,
-                    instance.notificationSettings[setting].voice)],
-            files: [
-                new Discord.AttachmentBuilder(
-                    Path.join(__dirname, '..',
-                        `resources/images/events/${instance.notificationSettings[setting].image}`))]
         });
     }
 }

@@ -332,18 +332,6 @@ module.exports = {
         }
     },
 
-    sendDiscordEventMessage: async function (guildId, serverId, text, image, color) {
-        const instance = Client.client.getInstance(guildId);
-
-        const content = {
-            embeds: [DiscordEmbeds.getEventEmbed(guildId, serverId, text, image, color)],
-            files: [new Discord.AttachmentBuilder(
-                Path.join(__dirname, '..', `resources/images/events/${image}`))]
-        }
-
-        await module.exports.sendMessage(guildId, content, null, instance.channelId.events);
-    },
-
     sendActivityNotificationMessage: async function (guildId, serverId, color, text, steamId, title = null, everyone = false) {
         const instance = Client.client.getInstance(guildId);
 

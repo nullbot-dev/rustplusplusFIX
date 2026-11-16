@@ -6,7 +6,6 @@
 * [**Servers**](discord_text_channels.md#servers-channel)
 * [**Settings**](discord_text_channels.md#settings-channel)
 * [**Commands**](discord_text_channels.md#commands-channel)
-* [**Events**](discord_text_channels.md#events-channel)
 * [**Teamchat**](discord_text_channels.md#teamchat-channel)
 * [**Switches**](discord_text_channels.md#switches-channel)
 * [**Switchgroups**](discord_text_channels.md#switch-groups-channel)
@@ -14,6 +13,8 @@
 * [**Storagemonitors**](discord_text_channels.md#storagemonitors-channel)
 * [**Activity**](discord_text_channels.md#activity-channel)
 * [**Trackers**](discord_text_channels.md#trackers-channel)
+
+The channels are created inside the `rustplusplus` category and their names start with an emoji, for example `📋-information`. If the bot finds a channel with the same name (with or without the emoji) in that category, it uses that channel instead of creating a new one. The event notifications are no longer posted to Discord, so there is no events channel. Run `/reset discord` to rename existing channels to the emoji names and to remove an old events channel.
 
 
 ## Information Channel
@@ -64,7 +65,7 @@ There are a few buttons for each server. The `CONNECT` button lets you start a c
 
 ## Settings Channel
 
-> The Settings Channel contain a bunch of different settings for rustplusplus. There are settings for language, voice gender, command prefix, trademark visibility, allow in-game commands, mute in-game, in-game teammate notifications, command delay, Smart Alarm notifications, enable leader command, battlemetrics notifications, wipe detection, vending machine subscription and event notifications.
+> The Settings Channel contain a bunch of different settings for rustplusplus. There are settings for language, voice gender, command prefix, trademark visibility, allow in-game commands, mute in-game, in-game teammate notifications, command delay, Smart Alarm notifications, enable leader command, battlemetrics notifications, wipe detection and vending machine subscription.
 
 ![Discord Text Channel Settings](images/channels/settings_channel.png)
 
@@ -74,24 +75,6 @@ There are a few buttons for each server. The `CONNECT` button lets you start a c
 > The Commands Channel allows you to run In-Game Commands straight from Discord.
 
 ![Discord Text Channel Commands](images/channels/commands_channel.png)
-
-
-## Events Channel
-
-> The Events Channel contains all the event notifications that occurs such as:
-
-- `Cargoship spawn`
-- `Cargoship despawn`
-- `Cargoship enters egress stage`
-- `Patrol Helicopter spawn`
-- `Patrol Helicopter despawn`
-- `Patrol Helicopter destroyed`
-- `Locked Crate at Oil Rig Unlocked`
-- `Oil Rig have been triggered`
-- `Chinook 47 spawn`
-- `New Vending Machine detected`
-
-![Discord Text Channel Events](images/channels/events_channel.png)
 
 
 ## Teamchat Channel

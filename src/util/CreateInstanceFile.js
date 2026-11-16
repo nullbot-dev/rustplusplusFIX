@@ -37,7 +37,6 @@ module.exports = (client, guild) => {
                 servers: null,
                 settings: null,
                 commands: null,
-                events: null,
                 teamchat: null,
                 switches: null,
                 switchGroups: null,
@@ -121,7 +120,6 @@ module.exports = (client, guild) => {
                 servers: null,
                 settings: null,
                 commands: null,
-                events: null,
                 teamchat: null,
                 switches: null,
                 switchGroups: null,
@@ -137,7 +135,6 @@ module.exports = (client, guild) => {
             if (!instance.channelId.hasOwnProperty('servers')) instance.channelId.servers = null;
             if (!instance.channelId.hasOwnProperty('settings')) instance.channelId.settings = null;
             if (!instance.channelId.hasOwnProperty('commands')) instance.channelId.commands = null;
-            if (!instance.channelId.hasOwnProperty('events')) instance.channelId.events = null;
             if (!instance.channelId.hasOwnProperty('teamchat')) instance.channelId.teamchat = null;
             if (!instance.channelId.hasOwnProperty('switches')) instance.channelId.switches = null;
             if (!instance.channelId.hasOwnProperty('switchGroups')) instance.channelId.switchGroups = null;
