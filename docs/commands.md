@@ -354,7 +354,6 @@ In-Game Command | Description
 [**craft**](commands.md#craft-ingame) | Display the cost to craft an item.
 [**death/deaths**](commands.md#deathdeaths) | Get recent death events.
 [**decay**](commands.md#decay-ingame) | Display the decay time of an item.
-[**events**](commands.md#events) | Get recent events.
 [**heli**](commands.md#heli) | Get information about Patrol Helicopter (Location, time since last downed, time since last on map).
 [**large**](commands.md#large) | Get information about Large Oil Rig (Time till crate unlocks, time since last trigger).
 [**leader**](commands.md#leader-1) | Give/Take the Team Leadership.
@@ -456,17 +455,6 @@ In-Game Command | Description
 <br>Command: `!decay armored wall 450`
 
 ![In-Game Command decay Image](images/ingame_commands/decay_ingame.png)
-
-
-## **events**
-
-> **Get recent In-Game events.** Available events are cargo, heli, small, large, chinook
-<br>Command: `!events` - Get last 5 events
-<br>Command: `!events 3` - Get last 3 events
-<br>Command: `!events cargo` - Get last 5 events from cargo
-<br>Command: `!events cargo 2` - Get last 2 events from cargo
-
-![In-Game Command events Image](images/ingame_commands/events_ingame.png)
 
 
 ## **heli**
