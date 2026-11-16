@@ -18,8 +18,12 @@
 
 */
 
+const Discord = require('discord.js');
+
 const DiscordTools = require('../discordTools/discordTools.js');
 const PermissionHandler = require('../handlers/permissionHandler.js');
+
+const CATEGORY_NAME = 'rustplusplus';
 
 module.exports = async (client, guild) => {
     const instance = client.getInstance(guild.id);
@@ -28,8 +32,18 @@ module.exports = async (client, guild) => {
     if (instance.channelId.category !== null) {
         category = DiscordTools.getCategoryById(guild.id, instance.channelId.category);
     }
+
+    /* The category can still exist from before (lost instance file), use it instead of creating a second one. */
     if (category === undefined) {
-        category = await DiscordTools.addCategory(guild.id, 'rustplusplus');
+        category = [...guild.channels.cache.values()].find(channel =>
+            channel.type === Discord.ChannelType.GuildCategory && channel.name.trim().toLowerCase() === CATEGORY_NAME);
+        if (category !== undefined) {
+            instance.channelId.category = category.id;
+            client.setInstance(guild.id, instance);
+        }
+    }
+    if (category === undefined) {
+        category = await DiscordTools.addCategory(guild.id, CATEGORY_NAME);
         instance.channelId.category = category.id;
         client.setInstance(guild.id, instance);
     }

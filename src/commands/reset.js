@@ -82,7 +82,8 @@ module.exports = {
 				await require('../discordTools/RemoveGuildChannels')(client, guild);
 
 				const category = await require('../discordTools/SetupGuildCategory')(client, guild);
-				await require('../discordTools/SetupGuildChannels')(client, guild, category);
+				/* true: channels that already exist in the category (found by name) get the current emoji name. */
+				await require('../discordTools/SetupGuildChannels')(client, guild, category, true);
 
 				const perms = PermissionHandler.getPermissionsRemoved(client, guild);
 				try {

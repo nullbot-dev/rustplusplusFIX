@@ -30,11 +30,15 @@ module.exports = async (client, guild) => {
             continue;
         }
 
-        await DiscordTools.removeTextChannel(guild.id, channelId);
+        /* Channels that were never created have no id, there is nothing to delete (and nothing to log). */
+        if (channelId !== null) await DiscordTools.removeTextChannel(guild.id, channelId);
         instance.channelId[channelName] = null;
     }
 
-    await DiscordTools.removeCategory(guild.id, categoryId);
+    /* The events channel no longer exists in the bot. An old one is deleted above, then the key is dropped. */
+    delete instance.channelId.events;
+
+    if (categoryId !== null) await DiscordTools.removeCategory(guild.id, categoryId);
     instance.channelId['category'] = null;
 
     client.setInstance(guild.id, instance);
