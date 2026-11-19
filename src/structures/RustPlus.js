@@ -633,6 +633,13 @@ class RustPlus extends RustPlusLib {
         else if (response.toString() === 'Error: Timeout reached while waiting for response') {
             this.log(Client.client.intlGet(null, 'errorCap'),
                 Client.client.intlGet(null, 'responseTimeout'), 'error');
+            /* Several timeouts in a row means the relay connection is dead: drop it so it reconnects. */
+            this.consecutiveTimeouts = (this.consecutiveTimeouts || 0) + 1;
+            if (this.consecutiveTimeouts >= 3 && this.websocket) {
+                this.consecutiveTimeouts = 0;
+                this.log(Client.client.intlGet(null, 'errorCap'), 'Too many timeouts in a row, reconnecting.', 'error');
+                try { this.websocket.terminate(); } catch (e) { /* Ignore */ }
+            }
             return false;
         }
         else if (response.hasOwnProperty('error')) {
@@ -647,6 +654,7 @@ class RustPlus extends RustPlusLib {
             clearInterval(this.pollingTaskId);
             return false;
         }
+        this.consecutiveTimeouts = 0;
         return true;
     }
 

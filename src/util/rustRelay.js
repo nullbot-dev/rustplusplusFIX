@@ -131,6 +131,36 @@ function resolve(guildId, serverIp, appPort, steamId) {
     };
 }
 
+/*
+    A relay connection can go silent without the socket ever closing (every request then times out and the
+    bot only notices minutes later). Ping the relay regularly; if no pong comes back, terminate the socket so
+    the normal 'close' -> 'disconnected' -> reconnect path runs right away.
+*/
+const KEEPALIVE_INTERVAL_MS = 15000;
+
+function startKeepAlive(rustplus, ws) {
+    stopKeepAlive(ws);
+    ws.isAliveRelay = true;
+    ws.on('pong', () => { ws.isAliveRelay = true; });
+    ws.keepAliveTimer = setInterval(() => {
+        if (ws.readyState !== WebSocket.OPEN) return;
+        if (!ws.isAliveRelay) {
+            try { rustplus.log('RELAY', 'No pong from relay, reconnecting.', 'error'); } catch (e) { /* Ignore */ }
+            ws.terminate();
+            return;
+        }
+        ws.isAliveRelay = false;
+        try { ws.ping(); } catch (e) { /* Ignore */ }
+    }, KEEPALIVE_INTERVAL_MS);
+}
+
+function stopKeepAlive(ws) {
+    if (ws && ws.keepAliveTimer) {
+        clearInterval(ws.keepAliveTimer);
+        ws.keepAliveTimer = null;
+    }
+}
+
 function connect(rustplus, relay) {
     loadProtoRoot().then((root) => {
         /* make sure existing connection is disconnected before connecting again */
@@ -148,6 +178,7 @@ function connect(rustplus, relay) {
 
         rustplus.websocket.on('open', () => {
             rustplus.emit('connected');
+            startKeepAlive(rustplus, rustplus.websocket);
         });
 
         rustplus.websocket.on('error', (e) => {
@@ -171,6 +202,7 @@ function connect(rustplus, relay) {
         });
 
         rustplus.websocket.on('close', () => {
+            stopKeepAlive(rustplus.websocket);
             rustplus.emit('disconnected');
         });
     }).catch((e) => {
